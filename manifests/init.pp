@@ -14,6 +14,11 @@ class django (
 
   # Check out the app from version control
   vcsrepo { $path:
-    ensure => present,
+    ensure   => present,
+    path     => $path,
+    provider => 'git',
+    source   => $source,
+    revision => $revision,
   }
+
 }
