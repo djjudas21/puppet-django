@@ -5,6 +5,7 @@ class django (
   $url,     # URL that will be used to serve the app
   $ensure = 'present',
   $revision = undef, # Revision of the app
+  $ssl      = false, # Enable SSL
 ) {
 
   # Create the directory where the app will be installed
@@ -36,9 +37,15 @@ class django (
     wsgi_python_path   => '/path/to/venv/site-packages',
   }
 
+  $port = $ssl ? {
+    true    => 443,
+    default => 80,
+  }
+
   # Configure apache vhost
   apache::vhost { $url:
     docroot             => $path,
+    port                => $port,
     wsgi_daemon_process => 'wsgi',
     wsgi_script_aliases => {
       '/' => "${path}/wsgi.py",
