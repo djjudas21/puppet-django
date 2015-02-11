@@ -27,9 +27,20 @@ class django (
     requirements => "${path}/requirements.txt",
   }
 
+  # Initialise wsgi
+  class { 'apache::mod::wsgi':
+    wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+    wsgi_python_home   => '/path/to/venv',
+    wsgi_python_path   => '/path/to/venv/site-packages',
+  }
+
   # Configure apache vhost
   apache::vhost { $url:
-    docroot => $path,
+    docroot             => $path,
+    wsgi_daemon_process => 'wsgi',
+    wsgi_script_aliases => {
+      '/' => "${path}/wsgi.py",
+    },
   }
 
 }
