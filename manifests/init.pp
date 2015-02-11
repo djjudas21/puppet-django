@@ -21,4 +21,15 @@ class django (
     revision => $revision,
   }
 
+  # Create a virtualenv and install deps
+  python::virtualenv { $path:
+    ensure       => present,
+    requirements => "${path}/requirements.txt",
+  }
+
+  # Configure apache vhost
+  apache::vhost { $url:
+    docroot => $path,
+  }
+
 }
