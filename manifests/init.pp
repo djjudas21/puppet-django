@@ -1,11 +1,11 @@
 # Deploy a Django app from git
 class django (
-  $source,  # Source of app in git
-  $path,    # Destination path on filesystem
-  $url,     # URL that will be used to serve the app
+  $source,                     # Source of app in git
+  $url,                        # URL that will be used to serve the app
+  $path = "/var/www/${name}",  # Destination path on filesystem
   $ensure = 'present',
-  $revision = undef, # Revision of the app
-  $ssl      = false, # Enable SSL
+  $revision = undef,           # Revision of the app
+  $ssl      = false,           # Enable SSL
 ) {
 
   # Directory layout for a typical django app
@@ -26,7 +26,7 @@ class django (
   }
 
   # Check out the app from version control
-  vcsrepo { $path:
+  vcsrepo { $name:
     ensure   => present,
     path     => $path,
     provider => 'git',
@@ -36,8 +36,9 @@ class django (
   }
 
   # Create a virtualenv and install deps
-  python::virtualenv { "${path}/virtualenv":
+  python::virtualenv { $name:
     ensure       => present,
+    venv_dir     => "${path}/virtualenv",
     requirements => "${path}/requirements.txt",
     require      => Vcsrepo[$path],
   }
@@ -45,8 +46,8 @@ class django (
   # Initialise wsgi
   class { 'apache::mod::wsgi':
     wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
-    wsgi_python_home   => '/path/to/venv',
-    wsgi_python_path   => '/path/to/venv/site-packages',
+    wsgi_python_home   => "${path}/virtualenv",
+    wsgi_python_path   => "${path}/virtualenv/site-packages",
   }
 
   $port = $ssl ? {
@@ -60,9 +61,9 @@ class django (
     port                => $port,
     wsgi_daemon_process => 'wsgi',
     wsgi_script_aliases => {
-      '/' => "${path}/wsgi.py",
+      '/' => "${path}/${name}/${name}/wsgi.py",
     },
-    require             => Python::Virtualenv[$path],
+    require             => Python::Virtualenv[$name],
   }
 
 }
