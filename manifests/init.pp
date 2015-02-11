@@ -19,12 +19,14 @@ class django (
     provider => 'git',
     source   => $source,
     revision => $revision,
+    require  => File[$path],
   }
 
   # Create a virtualenv and install deps
   python::virtualenv { $path:
     ensure       => present,
     requirements => "${path}/requirements.txt",
+    require      => Vcsrepo[$path],
   }
 
   # Initialise wsgi
@@ -41,6 +43,7 @@ class django (
     wsgi_script_aliases => {
       '/' => "${path}/wsgi.py",
     },
+    require             => Python::Virtualenv[$path],
   }
 
 }
