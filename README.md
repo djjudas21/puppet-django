@@ -66,6 +66,10 @@ Optional parameter. Defaults to `present`. Currently has no effect anyway.
 
 Optional parameter. Allows you to pass in a specific tag or revision of code in your git repo.
 
+### `identity`
+
+Optional parameter. Specify the path to an SSH public key if your git repo requires authentication to clone.
+
 ### `ssl`
 
 Optional parameter. Enable SSL in your Apache vhost. Defaults to `false`.

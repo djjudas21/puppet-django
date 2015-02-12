@@ -6,6 +6,7 @@ class django (
   $ensure = 'present',
   $revision = undef,           # Revision of the app
   $ssl      = false,           # Enable SSL
+  $identity = undef,           # SSH key for git repo
 ) {
 
   # Directory layout for a typical django app
@@ -32,6 +33,7 @@ class django (
     provider => 'git',
     source   => $source,
     revision => $revision,
+    identity => $identity,
     require  => File[$path],
   }
 
