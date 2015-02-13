@@ -25,6 +25,11 @@ define django (
   include apache
   include apache::mod::wsgi
 
+  # Install & configure Python
+  class { 'python' :
+    virtualenv => true,
+  }
+
   # Create the directory where the app will be installed
   file { $path:
     ensure => directory,
@@ -39,15 +44,6 @@ define django (
     revision => $revision,
     identity => $identity,
     require  => File[$path],
-  }
-
-  # Configure python
-  class { 'python' :
-    version    => 'system',
-    pip        => true,
-    dev        => true,
-    virtualenv => true,
-    gunicorn   => false,
   }
 
   # Create a virtualenv and install deps
