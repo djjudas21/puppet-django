@@ -4,9 +4,18 @@
     "author": "jgazeley",
     "summary": "Deploy a Django app from git into an Apache web server",
     "license": "Apache 2.0",
-    "source": "",
-    "project_page": null,
-    "issues_url": null,
+    "source": "https://github.com/djjudas21/puppet-django",
+    "project_page": "https://github.com/djjudas21/puppet-django",
+    "issues_url": "https://github.com/djjudas21/puppet-django/issues",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "RedHat",
+            "operatingsystemrelease": [
+                "5.0",
+                "6.0"
+            ]
+        }
+  ],
     "dependencies": [
         {
             "name": "puppetlabs-vcsrepo",
