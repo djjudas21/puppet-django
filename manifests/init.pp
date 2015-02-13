@@ -21,6 +21,10 @@ define django (
   #       ├─ wsgi.py       Called by apache mod_wsgi
   #       └─ urls.py       Maps URLs onto applications
 
+  # Initialise Apache and modules
+  include apache
+  include apache::mod::wsgi
+
   # Create the directory where the app will be installed
   file { $path:
     ensure => directory,
@@ -58,13 +62,6 @@ define django (
   python::requirements { "${path}/requirements.txt":
     virtualenv => "${path}/virtualenv",
     require    => Vcsrepo[$path],
-  }
-
-  # Initialise wsgi
-  class { 'apache::mod::wsgi':
-    wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
-    wsgi_python_home   => "${path}/virtualenv",
-    wsgi_python_path   => "${path}/virtualenv/site-packages",
   }
 
   $port = $ssl ? {
