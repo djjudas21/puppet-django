@@ -1,5 +1,5 @@
 # Deploy a Django app from git
-class django (
+define django (
   $source,                     # Source of app in git
   $url,                        # URL that will be used to serve the app
   $path = "/var/www/${name}",  # Destination path on filesystem
