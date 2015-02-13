@@ -74,6 +74,10 @@ Optional parameter. Specify the path to an SSH public key if your git repo requi
 
 Optional parameter. Enable SSL in your Apache vhost. Defaults to `false`.
 
+### `port`
+
+Optional parameter. Override Apache listen port. Defaults to `80` if `$ssl = false` and `443` if `$ssl = true`.
+
 
 ## Limitations
 
