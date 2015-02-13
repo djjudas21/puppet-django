@@ -7,6 +7,7 @@ define django (
   $revision = undef,           # Revision of the app
   $ssl      = false,           # Enable SSL
   $identity = undef,           # SSH key for git repo
+  $port     = undef,           # Override port
 ) {
 
   # Directory layout for a typical django app
@@ -52,11 +53,6 @@ define django (
     venv_dir     => "${path}/virtualenv",
     requirements => "${path}/requirements.txt",
     require      => Vcsrepo[$path],
-  }
-
-  $port = $ssl ? {
-    true    => 443,
-    default => 80,
   }
 
   # Configure apache vhost
