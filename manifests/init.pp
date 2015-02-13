@@ -8,6 +8,8 @@ define django (
   $ssl      = false,           # Enable SSL
   $identity = undef,           # SSH key for git repo
   $port     = undef,           # Override port
+  $ssl_cert = undef,           # Path to SSL cert
+  $ssl_key  = undef,           # Path to SSL key
 ) {
 
   # Directory layout for a typical django app
@@ -59,6 +61,9 @@ define django (
   apache::vhost { $url:
     docroot             => $path,
     port                => $port,
+    ssl                 => $ssl,
+    ssl_cert            => $ssl_cert,
+    ssl_key             => $ssl_key,
     wsgi_daemon_process => 'wsgi',
     wsgi_script_aliases => {
       '/' => "${path}/${name}/${name}/wsgi.py",

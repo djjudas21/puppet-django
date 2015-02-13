@@ -78,6 +78,13 @@ Optional parameter. Enable SSL in your Apache vhost. Defaults to `false`.
 
 Optional parameter. Override Apache listen port. Defaults to `80` if `$ssl = false` and `443` if `$ssl = true`.
 
+### `ssl_cert`
+
+Optional parameter. Specify the path to your SSL certificate. Defaults to whatever `puppetlabs/apache` chooses for your OS.
+
+### `ssl_key`
+
+Optional parameter. Specify the path to your SSL private key. Defaults to whatever `puppetlabs/apache` chooses for your OS.
 
 ## Limitations
 
