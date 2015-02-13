@@ -37,6 +37,15 @@ define django (
     require  => File[$path],
   }
 
+  # Configure python
+  class { 'python' :
+    version    => 'system',
+    pip        => true,
+    dev        => true,
+    virtualenv => true,
+    gunicorn   => false,
+  }
+
   # Create a virtualenv and install deps
   python::virtualenv { $name:
     ensure       => present,
