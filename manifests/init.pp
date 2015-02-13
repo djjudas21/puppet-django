@@ -54,12 +54,6 @@ define django (
     require      => Vcsrepo[$path],
   }
 
-  # Install deps
-  python::requirements { "${path}/requirements.txt":
-    virtualenv => "${path}/virtualenv",
-    require    => Vcsrepo[$path],
-  }
-
   $port = $ssl ? {
     true    => 443,
     default => 80,
