@@ -31,6 +31,7 @@ define django (
   # Install & configure Python
   class { 'python' :
     virtualenv => true,
+    dev        => true,
   }
 
   # Create the directory where the app will be installed
