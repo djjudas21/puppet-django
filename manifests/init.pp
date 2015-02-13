@@ -54,6 +54,12 @@ define django (
     require      => Vcsrepo[$path],
   }
 
+  # Install deps
+  python::requirements { "${path}/requirements.txt":
+    virtualenv => "${path}/virtualenv",
+    require    => Vcsrepo[$path],
+  }
+
   # Initialise wsgi
   class { 'apache::mod::wsgi':
     wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
